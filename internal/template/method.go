@@ -260,7 +260,7 @@ func Test_{{.NewStructName}}Query(t *testing.T) {
 		t.Error("clean table <{{.TableName}}> fail:", err)
 		return
 	}
-	
+
 	_, ok := {{.NewStructName}}.GetFieldByName("")
 	if ok {
 		t.Error("GetFieldByName(\"\") from {{.NewStructName}} success")
@@ -273,12 +273,12 @@ func Test_{{.NewStructName}}Query(t *testing.T) {
 
 	err = do.Save(&{{.StructInfo.Package}}.{{.StructName}}{})
 	if err != nil {
-		t.Error("create item in table <{{.TableName}}> fail:", err)
+		t.Error("save item in table <{{.TableName}}> fail:", err)
 	}
 
 	err = do.CreateInBatches([]*{{.StructInfo.Package}}.{{.StructName}}{ {}, {} }, 10)
 	if err != nil {
-		t.Error("create item in table <{{.TableName}}> fail:", err)
+		t.Error("create items in batches in table <{{.TableName}}> fail:", err)
 	}
 
 	_, err = do.Select({{.NewStructName}}.ALL).Take()
@@ -293,7 +293,7 @@ func Test_{{.NewStructName}}Query(t *testing.T) {
 
 	_, err = do.Last()
 	if err != nil {
-		t.Error("First() on table <{{.TableName}}> fail:", err)
+		t.Error("Last() on table <{{.TableName}}> fail:", err)
 	}
 
 	_, err = do.Where(primaryKey.IsNotNull()).FindInBatch(10, func(tx gen.Dao, batch int) error { return nil })
@@ -335,7 +335,7 @@ func Test_{{.NewStructName}}Query(t *testing.T) {
 	if err != nil {
 		t.Error("FindByPage() on table <{{.TableName}}> fail:", err)
 	}
-	
+
 	_, err = do.ScanByPage(&{{.StructInfo.Package}}.{{.StructName}}{}, 0, 1)
 	if err != nil {
 		t.Error("ScanByPage() on table <{{.TableName}}> fail:", err)
@@ -350,7 +350,7 @@ func Test_{{.NewStructName}}Query(t *testing.T) {
 	if err != nil {
 		t.Error("FirstOrCreate() on table <{{.TableName}}> fail:", err)
 	}
-	
+
 	var _a _another
 	var _aPK = field.NewString(_a.TableName(), clause.PrimaryKey)
 
@@ -363,7 +363,7 @@ func Test_{{.NewStructName}}Query(t *testing.T) {
 	if err != nil {
 		t.Error("LeftJoin() on table <{{.TableName}}> fail:", err)
 	}
-	
+
 	_, err = do.Not().Or().Clauses().Take()
 	if err != nil {
 		t.Error("Not/Or/Clauses on table <{{.TableName}}> fail:", err)
